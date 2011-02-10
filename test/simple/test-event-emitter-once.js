@@ -5,9 +5,13 @@ var events = require('events');
 var e = new events.EventEmitter();
 var times_hello_emited = 0;
 
-e.once('hello', function(a, b) {
+var listener = function(a, b) {
   times_hello_emited++;
-});
+};
+
+e.once('hello', listener);
+
+assert.deepEqual(e.listeners('hello'), [listener]);
 
 e.emit('hello', 'a', 'b');
 e.emit('hello', 'a', 'b');
